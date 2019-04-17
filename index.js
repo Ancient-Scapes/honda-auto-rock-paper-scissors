@@ -20,6 +20,7 @@ async function login(page) {
 
   await page.goto(URL, {waitUntil: "domcontentloaded"});
 
+  // ログイン情報入力、ログインボタン押下
   await page.evaluate((id, password) => {
     document.querySelector('.js-username-field').value = id;
     document.querySelector('.js-password-field').value = password;
@@ -32,18 +33,19 @@ async function login(page) {
 }
 
 async function tweetPepsi(page) {
-  // tweetボタンクリック
+  // ツイートモーダル開く
   await page.evaluate(({}) => {
     document.querySelector('#global-new-tweet-button').click();
   },{});
 
   await page.waitFor(500);
 
-  // tweetボタンクリック
+  // ツイート文入力
   await page.evaluate(({}) => {
     document.querySelector('#Tweetstorm-tweet-box-0 > div.tweet-box-content > div.tweet-content > div.RichEditor.RichEditor--emojiPicker.is-fakeFocus > div.RichEditor-container.u-borderRadiusInherit > div.RichEditor-scrollContainer.u-borderRadiusInherit > div.tweet-box.rich-editor.is-showPlaceholder > div').textContent = '@pepsi_jpn #本田とじゃんけん #本田にグーで勝つ'
   },{});
 
+  // ツイート
   await page.evaluate(({}) => {
     document.querySelector('.SendTweetsButton').click();
   },{});
