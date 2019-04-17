@@ -1,5 +1,7 @@
 # 本田とじゃんけん
 
+![ほないただきます](https://user-images.githubusercontent.com/18649842/56264146-7cabea80-6120-11e9-88b5-b8a20b52daf1.png)
+
 ## Usage
 
 - clone
