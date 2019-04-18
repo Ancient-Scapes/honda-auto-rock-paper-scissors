@@ -27,12 +27,14 @@ async function login(page) {
     document.querySelector('.js-signin').submit();
   }, process.env.ACCOUNT_ID, process.env.ACCOUNT_PASSWORD);
 
-  await page.waitFor(500);
+  await page.waitForNavigation();
 
   console.log('✨  ログイン成功');
 }
 
 async function tweetPepsi(page) {
+  const tweetText = '@pepsi_jpn #本田とじゃんけん #本田にパーで勝つ';
+
   // ツイートモーダル開く
   await page.evaluate(({}) => {
     document.querySelector('#global-new-tweet-button').click();
@@ -41,9 +43,14 @@ async function tweetPepsi(page) {
   await page.waitFor(500);
 
   // ツイート文入力
-  await page.evaluate(({}) => {
-    document.querySelector('#Tweetstorm-tweet-box-0 > div.tweet-box-content > div.tweet-content > div.RichEditor.RichEditor--emojiPicker.is-fakeFocus > div.RichEditor-container.u-borderRadiusInherit > div.RichEditor-scrollContainer.u-borderRadiusInherit > div.tweet-box.rich-editor.is-showPlaceholder > div').textContent = '@pepsi_jpn #本田とじゃんけん #本田にグーで勝つ'
-  },{});
+  await page.evaluate((tweetText) => {
+    document.querySelector('#Tweetstorm-tweet-box-0 > div.tweet-box-content > div.tweet-content > div.RichEditor.RichEditor--emojiPicker.is-fakeFocus > div.RichEditor-container.u-borderRadiusInherit > div.RichEditor-scrollContainer.u-borderRadiusInherit > div.tweet-box.rich-editor.is-showPlaceholder > div').textContent = tweetText;
+  }, tweetText);
+
+  // await page.screenshot({
+  //   path: "test2-0.png",
+  //   fullPage: true
+  // });
 
   // ツイート
   await page.evaluate(({}) => {
