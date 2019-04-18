@@ -47,11 +47,6 @@ async function tweetPepsi(page) {
     document.querySelector('#Tweetstorm-tweet-box-0 > div.tweet-box-content > div.tweet-content > div.RichEditor.RichEditor--emojiPicker.is-fakeFocus > div.RichEditor-container.u-borderRadiusInherit > div.RichEditor-scrollContainer.u-borderRadiusInherit > div.tweet-box.rich-editor.is-showPlaceholder > div').textContent = tweetText;
   }, tweetText);
 
-  // await page.screenshot({
-  //   path: "test2-0.png",
-  //   fullPage: true
-  // });
-
   // ツイート
   await page.evaluate(({}) => {
     document.querySelector('.SendTweetsButton').click();
