@@ -9,6 +9,7 @@ async function main() {
     await login(page);
     await tweetPepsi(page)
   } catch (error) {
+    console.log('🍙  俺の勝ち！なんでエラーが発生したか、明日まで考えてみてください');
     console.log(error);
   } finally {
     browser.close();
@@ -33,47 +34,21 @@ async function login(page) {
 }
 
 async function tweetPepsi(page) {
-  const tweetText = '＼ #本田とカードバトル ／ #私は本田のBを引く @pepsi_jpn をフォローして 1日1回、 #本田圭佑 とカードバトル！ 勝てば、 #ペプシ #ジャパンコーラ １ケース当たる！計1000名様！ 【7/22まで #毎日挑戦 #毎日11時start 】 http://bit.ly/2IcJudY ';
-  let isSuccess = true;
+  const tweetText = '＼ #本田とカードバトル ／ #私は本田のAを引く @pepsi_jpn をフォローして 1日1回、 #本田圭佑 とカードバトル！ 勝てば、 #ペプシ #ジャパンコーラ １ケース当たる！計1000名様！ 【7/22まで #毎日挑戦 #毎日11時start 】 http://bit.ly/2IcJudY ';
 
   // ツイートモーダル開く
-  await page.evaluate(({}) => {
-    const newTweetButton = document.querySelector('#global-new-tweet-button');
-    if (!newTweetButton) throw newTweetButton;
-    newTweetButton.click();
-  },{}).catch(async (err) => {
-    isSuccess = false;
-  });
-
+  await page.click('#global-new-tweet-button')
   await page.waitFor(500);
 
   // ツイート文入力
-  await page.evaluate((tweetText) => {
-    const tweetDiv = document.querySelector('[data-placeholder-default="What’s happening?"][aria-owns="typeahead-dropdown-6"]');
-    if (!tweetDiv) throw tweetDiv;
-    tweetDiv.textContent = tweetText;
-    // クリックしないとツイートボタンがdisabledのままになる
-    tweetDiv.click();
-  }, tweetText).catch(async (err) => {
-    isSuccess = false;
-  });
-
+  const tweetBoxSelector = '[data-placeholder-default="What’s happening?"][aria-owns="typeahead-dropdown-6"]';
+  await page.type(tweetBoxSelector, tweetText);
+  await page.click(tweetBoxSelector);
   await page.waitFor(500);
 
   // ツイート
-  await page.evaluate(({}) => {
-    const tweetButton = document.querySelector('.SendTweetsButton');
-    if (!tweetButton || tweetButton.disabled) throw tweetButton;
-    tweetButton.click();
-  },{}).catch(async (err) => {
-    isSuccess = false;
-  });
-
-  if (isSuccess) {
-    console.log('🐤  ツイート完了');
-  } else {
-    console.log('🍙  俺の勝ち！なんでエラーが発生したか、明日まで考えてみてください')
-  }
+  await page.click('.SendTweetsButton');
+  console.log('🐤  ツイート完了');
 }
 
 main();
