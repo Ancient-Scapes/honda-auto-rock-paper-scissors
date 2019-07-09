@@ -63,7 +63,7 @@ async function tweetPepsi(page) {
   // ツイート
   await page.evaluate(({}) => {
     const tweetButton = document.querySelector('.SendTweetsButton');
-    if (!tweetButton || tweetButton.disabled) throw err;
+    if (!tweetButton || tweetButton.disabled) throw tweetButton;
     tweetButton.click();
   },{}).catch(async (err) => {
     isSuccess = false;
