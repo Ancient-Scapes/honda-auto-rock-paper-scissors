@@ -2,7 +2,9 @@ const puppeteer = require('puppeteer');
 require('dotenv').config();
 
 async function main() {
-  const browser = await puppeteer.launch({headless: false});
+  // デバッグ用
+  // const browser = await puppeteer.launch({headless: false});
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   try {
